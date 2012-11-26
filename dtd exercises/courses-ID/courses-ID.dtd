@@ -1,0 +1,34 @@
+<!--
+    Question 2
+    In this question, you are to create a DTD for a different version of the 
+    data set drawn from the Stanford course catalog. This version encodes 
+    the data using ID and IDREF(S) attributes.
+
+    Write a DTD for the XML data set.
+    Hint: You may want to use your DTD from the previous question as a 
+    starting point, since the structure is similar.
+-->
+
+<!ELEMENT Course_Catalog (Department*)>
+<!ELEMENT Department (Title, Course+, (Professor | Lecturer)*)>
+<!ELEMENT Title (#PCDATA)>
+<!ELEMENT Professor (First_Name, Middle_Initial?, Last_Name)>
+<!ELEMENT Course (Title, Description?)>
+<!ELEMENT Prerequisites (Prereq+)>
+<!ELEMENT Description (#PCDATA | Courseref)*>
+<!ELEMENT Courseref EMPTY>
+<!ELEMENT Instructors (Lecturer | Professor)*>
+<!ELEMENT Lecturer (First_Name, Middle_Initial?, Last_Name)>
+<!ELEMENT Prereq (#PCDATA)>
+<!ELEMENT First_Name (#PCDATA)>
+<!ELEMENT Middle_Initial (#PCDATA)>
+<!ELEMENT Last_Name (#PCDATA)>
+<!ATTLIST Department Code CDATA #REQUIRED
+	             Chair IDREF #REQUIRED>
+<!ATTLIST Course Number ID #REQUIRED
+	         Prerequisites IDREFS #IMPLIED
+	         Instructors IDREFS #REQUIRED
+	         Enrollment CDATA #IMPLIED>
+<!ATTLIST Courseref Number CDATA #REQUIRED>
+<!ATTLIST Professor InstrID ID #REQUIRED>
+<!ATTLIST Lecturer InstrID ID #REQUIRED>
