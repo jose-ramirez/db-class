@@ -27,3 +27,9 @@
                 \select_{name = 'Amy'} Eats) \join
 		\project_{pizza}(\select_{name = 'Fay'} Eats)
 		\join Serves))
+
+*   Find the names of all people who eat at least one pizza served by
+    Dominos but who do not frequent Dominos. 
+    (\project_{name}Frequents) \diff 
+    \project_{name}(\select_{pizzeria = 'Dominos'} Frequents) \join
+    \project_{name}(Eats \join \select_{pizzeria = 'Dominos'} Serves)
