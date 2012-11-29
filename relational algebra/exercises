@@ -34,3 +34,19 @@
     (\project_{name}Frequents) \diff 
     \project_{name}(\select_{pizzeria = 'Dominos'} Frequents) \join
     \project_{name}(Eats \join \select_{pizzeria = 'Dominos'} Serves)
+
+*   Find all pizzas that are eaten only by people younger than 24, or that
+    cost less than $10 everywhere they're served.
+
+    (\project_{pizza} Serves) \diff
+    \project_{pizza}(\select_{price >= 10} Serves) \union
+    (\project_{pizza}(Person \join Eats) \diff 
+    \project_{pizza}(\select_{age >= 24}(Person \join Eats)))
+
+*   Find the age of the oldest person (or people) who eat mushroom pizza.
+
+    \project_{a1} \rename_{a1, a2} 
+    (\project_{age} \select_{pizza = 'mushroom'}(Person \join Eats) \cross 
+    \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats)) \diff
+    \project_{a1} \select_{a1 < a2}(\rename_{a1} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats) \cross 
+    \rename_{a2} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats)) 
