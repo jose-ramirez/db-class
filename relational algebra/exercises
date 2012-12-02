@@ -52,9 +52,22 @@
     (\rename_{a1} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats) \cross 
     \rename_{a2} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats))
 
-*   Find all pizzerias that serve only pizzas eaten 
-    by people over 30.    
+*   Find all pizzerias that serve only pizzas eaten by people over 30.    
 
     \project_{pizzeria} Serves \diff 
-    \project_{pizzeria}(\project_{pizzeria, pizza} Serves \diff (\project_{pizzeria} Serves \cross \project_{pizza}(\select_{age > 30}Person \join Eats)));
+    \project_{pizzeria}(\project_{pizzeria, pizza} Serves \diff
+    (\project_{pizzeria} Serves \cross 
+    \project_{pizza}(\select_{age > 30}Person \join Eats)));
+
+*   Find all pizzerias that serve every pizza eaten by people over 30.
+    beta = \project_{pizza}(\select_{age > 30}Person \join Eats);
+    alpha = \project_{pizzeria, pizza}(Serves \join beta);
+    gamma = (\project_{pizzeria} alpha) \cross beta;
+    delta = gamma - alpha
+    result = \project_{pizzeria}alpha - \project_{pizzeria}delta
+
+    \project_{pizzeria}(\project_{pizzeria, pizza}(Serves \join \project_{pizza}(\select_{age > 30}Person \join Eats))) \diff
+    \project_{pizzeria}((\project_{pizzeria} \project_{pizzeria, pizza}(Serves \join \project_{pizza}(\select_{age > 30}Person \join Eats))) \cross 
+    \project_{pizza}(\select_{age > 30}Person \join Eats) \diff 
+    \project_{pizzeria, pizza}(Serves \join \project_{pizza}(\select_{age > 30}Person \join Eats)));
 
