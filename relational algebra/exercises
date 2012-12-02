@@ -48,5 +48,13 @@
     \project_{a1} \rename_{a1, a2} 
     (\project_{age} \select_{pizza = 'mushroom'}(Person \join Eats) \cross 
     \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats)) \diff
-    \project_{a1} \select_{a1 < a2}(\rename_{a1} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats) \cross 
-    \rename_{a2} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats)) 
+    \project_{a1} \select_{a1 < a2}
+    (\rename_{a1} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats) \cross 
+    \rename_{a2} \project_{age} \select_{pizza = 'mushroom'}(Person \join Eats))
+
+*   Find all pizzerias that serve only pizzas eaten 
+    by people over 30.    
+
+    \project_{pizzeria} Serves \diff 
+    \project_{pizzeria}(\project_{pizzeria, pizza} Serves \diff (\project_{pizzeria} Serves \cross \project_{pizza}(\select_{age > 30}Person \join Eats)));
+
