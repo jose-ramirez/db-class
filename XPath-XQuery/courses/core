@@ -1,0 +1,42 @@
+1.  Return all Title elements (of both departments and courses).
+
+	//Title
+
+2.  Return last names of all department chairs.
+
+	/Course_Catalog/Department/Chair/*/Last_Name
+
+3.  Return titles of courses with enrollment greater than 500.
+
+	Course_Catalog/Department/Course[@Enrollment > 500]/Title
+
+4.  Return titles of departments that have some course that takes "CS106B"
+	as a prerequisite.
+
+	Course_Catalog/Department[Course/Prerequisites/Prereq = "CS106B"]/Title
+
+5.  Return last names of all professors or lecturers who use a middle initial.
+	Don't worry about eliminating duplicates.
+
+	Course_Catalog/Department/
+	(Chair/Professor | Course/Instructors/(Lecturer | Professor))
+	[Middle_Initial]/Last_Name
+
+6.  Return the count of courses that have a cross-listed course (i.e., that
+	have "Cross-listed" in their description).
+
+	count(//Course[contains(Description, "Cross-listed")])
+
+7.  Return the average enrollment of all courses in the CS department.
+
+	//Department[@Code = "CS"]/avg(Course/@Enrollment)
+
+8.  Return last names of instructors teaching at least one course that has
+	"system" in its description and enrollment greater than 100.
+
+	//Course[@Enrollment > 100 and Description[contains(., 'system')]]
+	/Instructors/*/Last_Name
+
+9.  Return the title of the course with the largest enrollment.
+
+	//Course[@Enrollment = max(//Course/@Enrollment)]/Title

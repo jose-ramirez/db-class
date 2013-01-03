@@ -1,0 +1,71 @@
+1.  Return the area of Mongolia.
+
+    for $c in //country
+    where $c/@name = "Mongolia"
+    return $c/data(@area)
+
+2.  Return the names of all cities that have the same name as the country in
+	which they are located.
+
+    for $c in //country
+    where some $c1 in $c/city satisfies $c1/name = $c/@name
+    return <name>{$c/data(@name)}</name>
+
+3.  Return the average population of Russian-speaking countries.
+
+    let $country_list := //country[language = "Russian"]/@population
+    return avg($country_list)
+
+4.  Return the names of all countries that have at least three cities with
+    population greater than 3 million.
+
+    for $c in //country[count(city[population > 3000000]) > 2]
+    return $c/data(@name)
+
+5.  Create a list of French-speaking and German-speaking countries. The
+    result should take the form:
+
+    <result>
+      <French>
+        <country>country-name</country>
+        <country>country-name</country>
+        ...
+      </French>
+      <German>
+        <country>country-name</country>
+        <country>country-name</country>
+        ...
+      </German>
+    </result>
+
+    <result>
+        <French>{
+            for $c in //country[language = "French"]
+            return <country>{$c/data(@name)}</country>
+        }</French>
+        <German>{
+            for $c in //country[language = "German"]
+            return <country>{$c/data(@name)}</country>
+        }</German>
+    </result>
+
+6.  Return the countries with the highest and lowest population densities. Note
+    that because the "/" operator has its own meaning in XPath and XQuery, the
+    division operator is infix "div". To compute population density use
+    "(@population div @area)". You can assume density values are unique. The
+    result should take the form:
+
+    <result>
+      <highest density="value">country-name</highest>
+      <lowest density="value">country-name</lowest>
+    </result>
+
+    <result>{
+        let $max := max(//country/(@population div @area))
+        let $c_max := //country[@population div @area = $max]/data(@name)
+    return <highest density = "{$max}">{$c_max}</highest>
+    }{
+        let $min := min(//country/(@population div @area))
+        let $c_min := //country[@population div @area = $min]/data(@name)
+        return <lowest density = "{$min}">{$c_min}</lowest>
+    }</result>
