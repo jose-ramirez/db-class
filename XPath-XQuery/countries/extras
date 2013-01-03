@@ -1,0 +1,26 @@
+1.  Return the names of all countries with population greater than 100 million.
+
+    //country[data(@population) > 100000000]/data(@name)
+
+2.  Return the names of all countries where over 50% of the population speaks 
+	German. (Hint: Depending on your solution, you may want to use ".", which
+	refers to the "current element" within an XPath expression.)
+
+    //country[language[text() = "German" and data(@percentage) > 50]]/data(@name)
+
+3.  Return the names of all countries where a city in that country contains
+	more than one-third of the country's population.
+
+    //country[city/population > (data(@population) div 3)]/data(@name)
+
+4.  Return the population density of Qatar. Note: Since the "/" operator has
+    its own meaning in XPath and XQuery, the division operator is "div". To
+    compute population density use "(@population div @area)".
+
+    //country[@name = "Qatar"]/(@population div @area)
+
+5.  Return the names of all countries whose population is less than one
+    thousandth that of some city (in any country).
+
+    //country[1000 * @population < following::city/population or
+    1000 * @population < preceding::city/population]/data(@name)
