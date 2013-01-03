@@ -61,6 +61,24 @@
     (Hint: Depending on your solution, may want to use data(.), which returns
     the text value of the "current element" within an XPath expression.)
 
-    This one is also correct (according to the "judge") without the function:
+    This one is also correct (according to the "judge") without distinct-values():
     distinct-values(//language[contains(../data(@name), text())])
+
+11. Return all languages whose name textually contains the name of a country
+    in which the language is spoken. For instance, Icelandic is spoken in
+    Iceland, so return Icelandic. (Hint: Depending on your solution, may want
+    to use data(.), which returns the text value of the "current element" 
+    within an XPath expression.)
+
+    This one is also correct (according to the "judge") without distinct-values():
+    distinct-values(//language[contains(text(), ../data(@name))])
+
+12. Return the number of countries where Russian is spoken.
+
+    count(//country[language = "Russian"])
+
+13. Return the names of all countries for which the data does not include any
+    languages or cities, but the country has more than 10 million people.
+
+    //country[not(language) and not(city) and data(@population) > 10000000]/data(@name)
     
