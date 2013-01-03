@@ -24,3 +24,43 @@
 
     //country[1000 * @population < following::city/population or
     1000 * @population < preceding::city/population]/data(@name)
+
+6.  Return all city names that appear more than once, i.e., there is more than
+    one city with that name in the data. Return only one instance of each such
+    city name. (Hint: You might want to use the "preceding" and/or "following"
+    navigation axes for this query, which were not covered in the video or our
+    demo script; they match any preceding or following node, not just siblings.)
+
+    //city[name = following::name]/name
+
+7.  Return the names of all countries containing a city such that some other
+    country has a city of the same name. (Hint: You might want to use the
+    "preceding" and/or "following" navigation axes for this query, which were
+    not covered in the video or our demo script; they match any preceding or
+    following node, not just siblings.)
+
+    //country[following::city/name = ./city/name or
+    preceding::city/name = ./city/name]/data(@name)
+
+8.  Return the names of all countries whose name textually contains a language
+    spoken in that country. For instance, Uzbek is spoken in Uzbekistan, so
+    return Uzbekistan. (Hint: You may want to use ".", which refers to the
+    "current element" within an XPath expression.)
+
+    //country[language[contains(../data(@name),./text())]]/data(@name)
+
+9.  Return the names of all countries in which people speak a language whose
+    name textually contains the name of the country. For instance, Japanese is
+    spoken in Japan, so return Japan. (Hint: You may want to use ".", which
+    refers to the "current element" within an XPath expression.)
+
+    //country[language[contains(./text(), ../data(@name))]]/data(@name)
+
+10. Return all languages spoken in a country whose name textually contains the
+    language name. For instance, German is spoken in Germany, so return German.
+    (Hint: Depending on your solution, may want to use data(.), which returns
+    the text value of the "current element" within an XPath expression.)
+
+    This one is also correct (according to the "judge") without the function:
+    distinct-values(//language[contains(../data(@name), text())])
+    
